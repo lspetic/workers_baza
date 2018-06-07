@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const register = require('./functions/register');
 const login = require('./functions/login');
 const profile = require('./functions/profile');
+const job = require('./functions/job.js');
 const password = require('./functions/password');
 const config = require('./config/config.json');
 
@@ -37,11 +38,13 @@ module.exports = router => {
 		}
 	});
 	router.get('/',(req,res) => {
+
 		profile.getProfile(req.params.id)
+
 		.then(result => res.json(result))
 
 		.catch(err => res.status(err.status).json({ message: err.message }));
-	})
+	});
 
 	router.post('/users', (req, res) => {
 
@@ -110,6 +113,32 @@ module.exports = router => {
 			res.status(401).json({ message: 'Invalid Token !' });
 		}
 	});
+	router.put('/users/:id/job',(req,res)=>{
+
+        if (checkToken(req)) {
+            const email = req.params.id;
+            const start_job = req.body.start_job;
+            const end_job = req.body.end_job;
+            if(!start_job || !end_job || !start_job.trim() || !end_job.trim()){
+
+                res.status(400).json({ message: 'Invalid Request !' });
+
+			} else {
+
+            	job.putJob(email,start_job,end_job)
+
+                   .then(result => res.status(result.status).json({ message: result.message }))
+
+                   .catch(err => res.status(err.status).json({ message: err.message }));
+
+			}
+
+        }else {
+            res.status(401).json({ message: 'Invalid Token !' });
+		}
+        console.log(req.body.end_job);
+
+	});
 
 	router.post('/users/:id/password', (req,res) => {
 
@@ -144,10 +173,13 @@ module.exports = router => {
 			try {
 
   				var decoded = jwt.verify(token, config.secret);
+  				console.log(decoded.message);
+  				console	.log(req.params.id);
 
   				return decoded.message === req.params.id;
 
 			} catch(err) {
+				console.log(err.toString());
 
 				return false;
 			}
@@ -157,4 +189,4 @@ module.exports = router => {
 			return false;
 		}
 	}
-}
+};

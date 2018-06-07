@@ -3,42 +3,41 @@
 const user = require('../models/user');
 const bcrypt = require('bcryptjs');
 
-exports.loginUser = (email, password) => 
+exports.loginUser = (email, password) =>
 
-	new Promise((resolve,reject) => {
+    new Promise((resolve,reject) => {
 
-		user.find({email: email})
+        user.find({email: email})
 
-		.then(users => {
+            .then(users => {
 
-			if (users.length == 0) {
+                if (users.length == 0) {
 
-				reject({ status: 404, message: 'User Not Found !' });
+                    reject({ status: 404, message: 'User Not Found !' });
 
-			
-			}else{
-				
+                } else {
 
-				return users[0];
-			}
-		})
+                    return users[0];
 
-		.then(user => {
+                }
+            })
 
-			const hashed_password = user.hashed_password;
+            .then(user => {
 
-			if (bcrypt.compareSync(password, hashed_password)) {
+                const hashed_password = user.hashed_password;
 
-				resolve({ status: 200, message: email });
+                if (bcrypt.compareSync(password, hashed_password)) {
 
-			} else {
+                    resolve({ status: 200, message: email });
 
-				reject({ status: 401, message: 'Invalid Credentials !' });
-			}
-		})
+                } else {
 
-		.catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
+                    reject({ status: 401, message: 'Invalid Credentials !' });
+                }
+            })
 
-	});
+            .catch(err => reject({ status: 500, message: 'Internal Server Error !' }));
+
+    });
 
 	

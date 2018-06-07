@@ -18,8 +18,14 @@ exports.registerUser = (name, email, password,proffesion) =>
 			created_at: new Date(),
 			proffesion: proffesion
 
+
 		
 		});
+		if (name=="admin"){
+			newUser.premission="admin"
+		}else{
+			newUser.premission="user"
+		}
 
 		newUser.save()
 

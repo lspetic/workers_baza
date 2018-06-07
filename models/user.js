@@ -13,7 +13,9 @@ const userSchema = mongoose.Schema({
 	created_at		: String,
 	temp_password	: String,
 	temp_password_time: String,
-	premission		:String
+	premission		:String,
+	start			:String,
+	end				:String
 	
 	
 });
