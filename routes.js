@@ -39,7 +39,7 @@ module.exports = router => {
 	});
 	router.get('/false',(req,res) => {
 
-            profile.getProfile(true)
+            profile.getProfileAv(true)
 
                 .then(result => res.json(result))
 
@@ -48,24 +48,60 @@ module.exports = router => {
 	});
     router.get('/true',(req,res) => {
 
-        profile.getProfileAv(true)
+        profile.getProfileUn(true)
 
             .then(result => res.json(result))
 
             .catch(err => res.status(err.status).json({message: err.message}));
     });
-    router.get('/list/:srt',(req,res) => {
+    router.get('/list/:srt/',(req,res) => {
     	//console.log(req.params.id);
 		//console.log(req.params.srt);
 
         const aaa=req.params.srt;
-        profile.getProfile(true)
+        profile.getProfileAll(true)
 
             .then(result => res.json(result.sort({aaa:1})))
 
             .catch(err => res.status(err.status).json({message: err.message}));
 	});
 
+    router.get('/list/:flg/:srt/',(req,res) => {
+        //console.log(req.params.id);
+        //console.log(req.params.srt);
+
+        const aaa=req.params.srt;
+        const flag=req.params.flg;
+
+        profile.getProfileAv(flag)
+
+            .then(result => res.json(result.sort({aaa:1})))
+
+            .catch(err => res.status(err.status).json({message: err.message}));
+    });
+
+    router.get('/users/:id', (req,res) => {
+        const aaa=req.params.srt;
+        if (1==1) {
+
+            profile.getProfileAll(req.params.id)
+
+                .then(result => res.json(result.sort({aaa:1})))
+
+                .catch(err => res.status(err.status).json({ message: err.message }));
+
+
+        } else {
+
+            res.status(401).json({ message: 'Invalid Token !' });
+        }
+    });
+
+    router.post('/user/all',(req,res)=>{
+    	console.log(req.body.email);
+    //	console.log(req.body.sort_by);
+
+	});
 
 	router.post('/users', (req, res) => {
 
@@ -92,22 +128,7 @@ module.exports = router => {
 		}
 	});
 
-	router.get('/users/:id', (req,res) => {
 
-		if (1==1) {
-			console.log('blaaaab_router.get');
-			profile.getProfile(req.params.id)
-
-			.then(result => res.json(result))
-
-			.catch(err => res.status(err.status).json({ message: err.message }));
-			
-
-		} else {
-
-			res.status(401).json({ message: 'Invalid Token !' });
-		}
-	});
 
 	router.put('/users/:id', (req,res) => {
 
