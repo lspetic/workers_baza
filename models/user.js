@@ -8,14 +8,15 @@ const userSchema = mongoose.Schema({
 
 	name 			: String,
 	email			: String,
-	proffesion       : String,
+	proffesion      : String,
 	hashed_password	: String,
 	created_at		: String,
 	temp_password	: String,
 	temp_password_time: String,
-	premission		:String,
-	start			:String,
-	end				:String
+	premission			:String,
+	start_job			:String,
+	end_job				:String,
+	gradiliste 			:String
 	
 	
 });

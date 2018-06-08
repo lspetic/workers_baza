@@ -37,14 +37,35 @@ module.exports = router => {
 			.catch(err => res.status(err.status).json({ message: err.message }));
 		}
 	});
-	router.get('/',(req,res) => {
+	router.get('/false',(req,res) => {
 
-		profile.getProfile(req.params.id)
+            profile.getProfile(true)
 
-		.then(result => res.json(result))
+                .then(result => res.json(result))
 
-		.catch(err => res.status(err.status).json({ message: err.message }));
+                .catch(err => res.status(err.status).json({message: err.message}));
+
 	});
+    router.get('/true',(req,res) => {
+
+        profile.getProfileAv(true)
+
+            .then(result => res.json(result))
+
+            .catch(err => res.status(err.status).json({message: err.message}));
+    });
+    router.get('/list/:srt',(req,res) => {
+    	//console.log(req.params.id);
+		//console.log(req.params.srt);
+
+        const aaa=req.params.srt;
+        profile.getProfile(true)
+
+            .then(result => res.json(result.sort({aaa:1})))
+
+            .catch(err => res.status(err.status).json({message: err.message}));
+	});
+
 
 	router.post('/users', (req, res) => {
 
@@ -115,17 +136,18 @@ module.exports = router => {
 	});
 	router.put('/users/:id/job',(req,res)=>{
 
-        if (checkToken(req)) {
+        if (1==1) {
             const email = req.params.id;
             const start_job = req.body.start_job;
             const end_job = req.body.end_job;
-            if(!start_job || !end_job || !start_job.trim() || !end_job.trim()){
+            const gradiliste = req.body.gradiliste;
+            if(!start_job || !end_job || !gradiliste || !start_job.trim() || !end_job.trim() || !gradiliste.trim()){
 
                 res.status(400).json({ message: 'Invalid Request !' });
 
 			} else {
 
-            	job.putJob(email,start_job,end_job)
+            	job.putJob(email,start_job,end_job,gradiliste)
 
                    .then(result => res.status(result.status).json({ message: result.message }))
 

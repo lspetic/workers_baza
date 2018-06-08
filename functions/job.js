@@ -2,7 +2,7 @@
 
 const user = require('../models/user');
 
-exports.putJob = (email,start_job,end_job) =>
+exports.putJob = (email,start_job,end_job,gradiliste) =>
 
     new Promise((resolve,reject) => {
 
@@ -10,8 +10,9 @@ exports.putJob = (email,start_job,end_job) =>
      user.find({email:email})
             .then(users => {
                 let user = users[0];
-                user.start=start_job;
-                user.end=end_job;
+                user.start_job=start_job;
+                user.end_job=end_job;
+                user.gradiliste=gradiliste;
                 return user.save();
             })
 
