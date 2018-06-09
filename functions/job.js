@@ -16,8 +16,8 @@ exports.putJob = (email,start_job,end_job,gradiliste) =>
                 return user.save();
             })
 
-//            .then(users => users.save())
+         .then(() => resolve({ status: 201, message: 'Job  Saved Sucessfully !' }))
 
-//            .catch(err => reject({ status: 500, message: 'Internal Server Error !' }))
+           .catch(err => reject({ status: 500, message: 'Internal Server Error !' }))
 
     });
