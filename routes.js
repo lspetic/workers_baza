@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const register = require('./functions/register');
 const login = require('./functions/login');
 const profile = require('./functions/profile');
+const sitelist = require('./functions/sitelist');
 const job = require('./functions/job.js');
 const password = require('./functions/password');
 const config = require('./config/config.json');
@@ -37,7 +38,7 @@ module.exports = router => {
 			.catch(err => res.status(err.status).json({ message: err.message }));
 		}
 	});
-	router.get('/false',(req,res) => {
+	router.get('/false',(req,res) => { //koristimo
 
             profile.getProfileAv(true)
 
@@ -46,7 +47,7 @@ module.exports = router => {
                 .catch(err => res.status(err.status).json({message: err.message}));
 
 	});
-    router.get('/true',(req,res) => {
+    router.get('/true',(req,res) => {//koristimo
 
         profile.getProfileUn(true)
 
@@ -54,19 +55,28 @@ module.exports = router => {
 
             .catch(err => res.status(err.status).json({message: err.message}));
     });
-    router.get('/list/:srt/',(req,res) => {
+
+    router.get('/site',(req,res) =>{//koristimo
+        sitelist.getSite()
+
+            .then(result => res.json(result))
+
+            .catch(err => res.status(err.status).json({message: err.message}));
+
+	});
+    router.get('/list/:srt/',(req,res) => {//koristimo
     	//console.log(req.params.id);
 		//console.log(req.params.srt);
 
         const aaa=req.params.srt;
-        profile.getProfileAll(true)
+        profile.getProfileAll()
 
             .then(result => res.json(result.sort({aaa:1})))
 
             .catch(err => res.status(err.status).json({message: err.message}));
 	});
 
-    router.get('/list/:flg/:srt/',(req,res) => {
+    router.get('/list/:flg/:srt/',(req,res) => {//ne koristimo trenutno
         //console.log(req.params.id);
         //console.log(req.params.srt);
 
@@ -80,7 +90,7 @@ module.exports = router => {
             .catch(err => res.status(err.status).json({message: err.message}));
     });
 
-    router.get('/users/:id', (req,res) => {
+    router.get('/users/:id', (req,res) => { //ne koristimo trenutno
         const aaa=req.params.srt;
         if (1==1) {
 
@@ -97,11 +107,6 @@ module.exports = router => {
         }
     });
 
-    router.post('/user/all',(req,res)=>{
-    	console.log(req.body.email);
-    //	console.log(req.body.sort_by);
-
-	});
 
 	router.post('/users', (req, res) => {
 

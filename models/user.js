@@ -21,7 +21,13 @@ const userSchema = mongoose.Schema({
 	
 });
 
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/workers');
+const siteSchema=mongoose.Schema({
+	name	:String,
+	address :String,
+	latlong :String
+});
 
-module.exports = mongoose.model('user', userSchema);        
+mongoose.Promise = global.Promise;
+//mongoose.connect('mongodb://localhost:27017/workers');
+
+module.exports = mongoose.model('user', userSchema);

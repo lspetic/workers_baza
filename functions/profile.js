@@ -2,7 +2,7 @@
 
 const user = require('../models/user');
 
-exports.getProfileAll = (sort1) =>
+exports.getProfileAll = () =>
 
 	
 	new Promise((resolve,reject) => {
@@ -63,6 +63,7 @@ exports.getProfileUn = sort1 =>
 
 
     });
+
 
 
 

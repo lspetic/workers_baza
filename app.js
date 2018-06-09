@@ -6,11 +6,16 @@ const bodyParser = require('body-parser');
 const logger 	   = require('morgan');
 const router 	   = express.Router();
 const port 	   = process.env.PORT || 8080;
+const mongoose = require('mongoose');
+
 
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
 require('./routes')(router);
+app.use('/api/v1', router);
+
+require('./routes1')(router);
 app.use('/api/v1', router);
 
 app.listen(port);
