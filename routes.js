@@ -52,6 +52,7 @@ module.exports = router => {
 		const email = req.body.email;
 		const password = req.body.password;
 		const proffesion = req.body.proffesion;
+		const permission = req.body.permission;
 
 		if (!name || !email || !password || !name.trim() || !email.trim() || !password.trim()) {
 
@@ -59,7 +60,7 @@ module.exports = router => {
 
 		} else {
 
-			register.registerUser(name, email, password, proffesion)
+			register.registerUser(name, email, password, proffesion, permission)
 
 			.then(result => {
 
