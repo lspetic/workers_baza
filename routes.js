@@ -10,6 +10,7 @@ const sitelist = require('./functions/sitelist');
 const job = require('./functions/job.js');
 const password = require('./functions/password');
 const config = require('./config/config.json');
+const user = require('./models/user');
 
 module.exports = router => {
 
@@ -90,13 +91,14 @@ module.exports = router => {
             .catch(err => res.status(err.status).json({message: err.message}));
     });
 
-    router.get('/users/:id', (req,res) => { //ne koristimo trenutno
-        const aaa=req.params.srt;
+    router.get('/users/:id', (req,res) => { // koristimo
+
+        const aaa="name";
         if (1==1) {
 
-            profile.getProfileAll(req.params.id)
+           profile.getSearch(req.params.id)
 
-                .then(result => res.json(result.sort({aaa:1})))
+                .then(result => res.json(result))
 
                 .catch(err => res.status(err.status).json({ message: err.message }));
 
