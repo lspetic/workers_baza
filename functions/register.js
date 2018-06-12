@@ -3,47 +3,45 @@
 const user = require('../models/user');
 const bcrypt = require('bcryptjs');
 
-exports.registerUser = (name, email, password,proffesion) =>
-    new Promise((resolve,reject) => {
+exports.registerUser = (name, email, password,proffesion) => 
 
-        const salt = bcrypt.genSaltSync(10);
-        const hash = bcrypt.hashSync(password, salt);
+	new Promise((resolve,reject) => {
 
-        const timeout = setTimeout(() => {
-            if (!resolve) {
-                reject('Timedout!');
-            }
-            clearTimeout(timeout);
-        }, 100);
+	    const salt = bcrypt.genSaltSync(10);
+		const hash = bcrypt.hashSync(password, salt);
 
-       user.findOne({'email': email}, function (err, user) {
-            // In case of any error return
-            if (err) {
-                console.log('Error in SignUp: ' + err);
-                reject(new Error('Server Error'));
-            }
-            // already exists
-            if (user) {
-                console.log('User already exists');
-                reject(new Error('E-mail already in use'));
-            } else{
+		const newUser = new user({
 
-                const newUser = new user({
-
-                    name: name,
-                    email: email,
-                    hashed_password: hash,
-                    created_at: new Date(),
-                    proffesion: proffesion
+			name: name,
+			email: email,
+			hashed_password: hash,
+			created_at: new Date('yyyy-mm-dd'),
+			proffesion: proffesion
 
 
-                });
-                // save the user
-                newUser.save()
-                    .then(() => resolve({ status: 201, message: 'User Registered Sucessfully !' }))
-            }
-        });
+		
+		});
+		if (name=="admin"){
+			newUser.premission="admin"
+		}else{
+			newUser.premission="user"
+		}
 
-    });
+		newUser.save()
+
+		.then(() => resolve({ status: 201, message: 'User Registered Sucessfully !' }))
+
+		.catch(err => {
+
+			if (err.code == 11000) {
+						
+				reject({ status: 409, message: 'User Already Registered !' });
+
+			} else {
+
+				reject({ status: 500, message: 'Internal Server Error !' });
+			}
+		});
+	});
 
 
