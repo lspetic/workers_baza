@@ -18,12 +18,16 @@ module.exports = router1 =>{
 
     router1.put('/site/:id',(req,res)=>{
 
-        if (1==1) {
+
             const name = req.params.id;
             const br_radnika = req.body.br_radnika;
             const address = req.body.address;
             const latlong = req.body.latlong;
+            console.log(name);
             console.log(br_radnika);
+            console.log(address);
+            console.log(latlong);
+
             if(!br_radnika){
 
                 res.status(400).json({ message: 'Invalid Request !' });
@@ -38,10 +42,8 @@ module.exports = router1 =>{
 
             }
 
-        }else {
-            res.status(401).json({ message: 'Invalid Token !' });
-        }
-        console.log(req.body.name);
+
+       // console.log(req.body.name);
 
     });
 

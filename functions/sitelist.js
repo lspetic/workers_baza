@@ -43,7 +43,7 @@ exports.getSiteOne = (name) =>
 
     });
 
-exports.putSite = (name,br_radnika,latlong,address) =>
+exports.putSite = (name,br_radnika,address,latlong) =>
 
     new Promise((resolve,reject) => {
 
