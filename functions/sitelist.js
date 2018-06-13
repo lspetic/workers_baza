@@ -53,7 +53,7 @@ exports.putSite = (name,br_radnika,address,latlong) =>
                 let site = sites[0];
                 site.name=name;
                 site.br_radnika=br_radnika;
-                console.log(br_radnika);
+
                 site.address=address;
                 site.latlong=latlong;
 

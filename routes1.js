@@ -20,9 +20,10 @@ module.exports = router1 =>{
 
 
             const name = req.params.id;
-            const br_radnika = req.body.br_radnika;
             const address = req.body.address;
             const latlong = req.body.latlong;
+            const br_radnika = req.body.br_radnika;
+
             console.log(name);
             console.log(br_radnika);
             console.log(address);
