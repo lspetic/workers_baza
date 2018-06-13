@@ -7,7 +7,8 @@ const Schema = mongoose.Schema;
 const siteSchema=mongoose.Schema({
     name	:String,
     address :String,
-    latlong :String
+    latlong :String,
+    br_radnika :Number
 
 });
 

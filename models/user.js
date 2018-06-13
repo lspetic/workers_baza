@@ -16,18 +16,15 @@ const userSchema = mongoose.Schema({
 	premission			:String,
 	start_job			:String,
 	end_job				:String,
-	gradiliste 			:String
+	gradiliste 			:String,
+	address				:String,
+	phone				:String,
+	surname				:String
 	
 	
 });
 
-const siteSchema=mongoose.Schema({
-	name	:String,
-	address :String,
-	latlong :String
-});
 
 mongoose.Promise = global.Promise;
-//mongoose.connect('mongodb://localhost:27017/workers');
 
 module.exports = mongoose.model('user', userSchema);

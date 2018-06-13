@@ -50,10 +50,17 @@ module.exports = router => {
 	});
     router.get('/true',(req,res) => {//koristimo
 
-        profile.getProfileUn(true)
+        profile.getProfileAll()
 
             .then(result => res.json(result))
 
+            .catch(err => res.status(err.status).json({message: err.message}));
+    });
+    router.get('/users/my/:email',(req,res) => {//koristimo za moj profil
+
+        profile.getProfileMy(req.params.email)
+
+            .then(result => res.json(result))
             .catch(err => res.status(err.status).json({message: err.message}));
     });
 
@@ -115,8 +122,11 @@ module.exports = router => {
 		const name = req.body.name;
 		const email = req.body.email;
 		const password = req.body.password;
-		const proffesion = req.body.proffesion;
-		const permission = req.body.permission;
+		const proffesion = req.body.profession;
+		const phone	 = req.body.phone;
+		const surname	 = req.body.surname;
+		const address	 = req.body.address;
+
 
 		if (!name || !email || !password || !name.trim() || !email.trim() || !password.trim()) {
 
@@ -124,7 +134,7 @@ module.exports = router => {
 
 		} else {
 
-			register.registerUser(name, email, password, proffesion, permission)
+			register.registerUser(name, email, password, proffesion,phone,address,surname)
 
 			.then(result => {
 
@@ -190,6 +200,60 @@ module.exports = router => {
         console.log(req.body.end_job);
 
 	});
+
+    router.put('/users/setad/:id',(req,res)=>{
+
+        if (1==1) {
+            const email = req.params.id;
+            const address=req.body.address;
+
+            if(!address || !address.trim()){
+
+                res.status(400).json({ message: 'Invalid Request !' });
+
+            } else {
+
+                job.putProfileAd(email,address)
+
+                    .then(result => res.status(result.status).json({ message: result.message }))
+
+                    .catch(err => res.status(err.status).json({ message: err.message }));
+
+            }
+
+        }else {
+            res.status(401).json({ message: 'Invalid Token !' });
+        }
+        console.log(req.body.end_job);
+
+    });
+
+    router.put('/users/setph/:id',(req,res)=>{
+
+        if (1==1) {
+            const email = req.params.id;
+            const phone=req.body.phone;
+
+            if(!phone || !phone.trim()){
+
+                res.status(400).json({ message: 'Invalid Request !' });
+
+            } else {
+
+                job.putProfilePh(email,phone)
+
+                    .then(result => res.status(result.status).json({ message: result.message }))
+
+                    .catch(err => res.status(err.status).json({ message: err.message }));
+
+            }
+
+        }else {
+            res.status(401).json({ message: 'Invalid Token !' });
+        }
+        console.log(req.body.end_job);
+
+    });
 
 	router.post('/users/:id/password', (req,res) => {
 

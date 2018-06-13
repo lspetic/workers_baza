@@ -23,3 +23,38 @@ exports.putJob = (email,start_job,end_job,gradiliste) =>
          .catch(err => reject({ status: 500, message: 'Internal Server Error !' }))
 
     });
+
+exports.putProfileAd = (email,address) =>
+
+    new Promise((resolve,reject) => {
+
+
+        user.find({email:email})
+            .then(users => {
+                let user = users[0];
+                user.address=address;
+                return user.save();
+            })
+
+            .then(() => resolve({ status: 201, message: 'Job  Saved Sucessfully !' }))
+
+            .catch(err => reject({ status: 500, message: 'Internal Server Error !' }))
+
+    });
+exports.putProfilePh = (email,phone) =>
+
+    new Promise((resolve,reject) => {
+
+
+        user.find({email:email})
+            .then(users => {
+                let user = users[0];
+                user.phone=phone;
+                return user.save();
+            })
+
+            .then(() => resolve({ status: 201, message: 'Job  Saved Sucessfully !' }))
+
+            .catch(err => reject({ status: 500, message: 'Internal Server Error !' }))
+
+    });
